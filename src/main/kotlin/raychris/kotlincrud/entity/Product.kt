@@ -4,7 +4,6 @@ import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
 import jakarta.persistence.Table
-import raychris.kotlincrud.model.ProductResponse
 import java.util.Date
 
 @Entity
@@ -31,15 +30,5 @@ class Product (
     @Column(name = "updatedAt")
     var updatedAt: Date = this.createdAt
 
-    fun toResponse(): ProductResponse {
-        return ProductResponse(
-            id = requireNotNull(this.id),
-            name = this.name,
-            description = this.description,
-            price = this.price,
-            quantity = this.quantity,
-            createdAt = this.createdAt,
-            updatedAt = this.updatedAt
-        )
-    }
+
 }

@@ -6,19 +6,19 @@ import jakarta.validation.constraints.NotNull
 
 data class CreateProductRequest(
     @field:NotBlank
-    var id: String,
+    var id: String?,
 
     @field:NotBlank
-    var name: String,
+    var name: String?,
 
     @field:NotBlank
-    var description: String,
+    var description: String?,
 
     @field:NotNull
     @field:Min(value = 1)
-    var price: Long,
+    var price: Long?,
 
     @field:NotNull
     @field:Min(value = 0)
-    var quantity: Int
+    var quantity: Int?
 )

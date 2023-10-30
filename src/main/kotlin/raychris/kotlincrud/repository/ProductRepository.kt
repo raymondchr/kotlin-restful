@@ -12,6 +12,12 @@ interface ProductRepository : JpaRepository<Product, String> {
 
     fun findOneById(id: String?): Product?
 
-    @Query(value = "select * from products", nativeQuery = true)
+    @Query(
+        """
+           SELECT p
+           FROM Product p
+           WHERE p.price < 50000 AND p.description <> '2'
+        """
+    )
     fun findByPage(pageable: Pageable): Page<Product>
 }

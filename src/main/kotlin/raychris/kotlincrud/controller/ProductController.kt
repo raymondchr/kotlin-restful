@@ -2,13 +2,16 @@ package raychris.kotlincrud.controller
 
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
+import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import raychris.kotlincrud.model.*
 import raychris.kotlincrud.service.ProductService
@@ -19,6 +22,7 @@ import raychris.kotlincrud.service.ProductService
 class ProductController(private val productService: ProductService) {
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     fun createProduct(@RequestBody body: CreateProductRequest):WebResponse<ProductResponse>{
         val productResponse = productService.create(body)
 
@@ -30,7 +34,7 @@ class ProductController(private val productService: ProductService) {
     }
 
     @GetMapping
-    fun getProduct(pageable: Pageable): Page<ProductResponse> {
+    fun getProducts(pageable: Pageable): Page<ProductResponse> {
         return productService.getAllTest(pageable)
     }
 
@@ -43,10 +47,9 @@ class ProductController(private val productService: ProductService) {
             status = "OK",
             data = productResponse
         )
-
     }
 
-    @PutMapping("/{product_id}")
+    @PatchMapping("/{product_id}")
     fun updateProduct(@PathVariable("product_id") id: String, @RequestBody body: UpdateProductRequest):WebResponse<ProductResponse>{
         val productResponse = productService.update(id,body)
 
@@ -64,7 +67,7 @@ class ProductController(private val productService: ProductService) {
         return WebResponse(
             code = 200,
             status = "OK",
-            data = productResponse
+            data = "Deleted"
         )
     }
 }

@@ -1,30 +1,31 @@
 package raychris.kotlincrud.service
 
+
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import raychris.kotlincrud.entity.Product
+import raychris.kotlincrud.entity.toResponse
 import raychris.kotlincrud.error.NotFoundException
 import raychris.kotlincrud.model.CreateProductRequest
-import raychris.kotlincrud.model.ListProductRequest
 import raychris.kotlincrud.model.ProductResponse
 import raychris.kotlincrud.model.UpdateProductRequest
 import raychris.kotlincrud.repository.ProductRepository
 import raychris.kotlincrud.validation.ValidationUtil
-import java.math.BigDecimal
 import java.util.*
 
 @Service
 class ProductService(private var productRepository: ProductRepository,var validationUtil: ValidationUtil) {
 
     fun create(createProductRequest: CreateProductRequest): ProductResponse{
+        validationUtil.validate(createProductRequest)
 
         val product = Product(
             id = createProductRequest.id,
-            name = createProductRequest.name,
-            description = createProductRequest.description,
-            price = createProductRequest.price,
-            quantity = createProductRequest.quantity
+            name = createProductRequest.name!!,
+            description = createProductRequest.description!!,
+            price = createProductRequest.price!!,
+            quantity = createProductRequest.quantity!!
         )
 
         productRepository.save(product)
@@ -50,7 +51,7 @@ class ProductService(private var productRepository: ProductRepository,var valida
         product.apply {
             name = updateProductRequest.name ?: this.name
             description = updateProductRequest.description ?: this.description
-            price = updateProductRequest.price ?: BigDecimal.ZERO.toLong()
+            price = updateProductRequest.price
             quantity = updateProductRequest.quantity ?: this.quantity
             updatedAt = Date()
         }
