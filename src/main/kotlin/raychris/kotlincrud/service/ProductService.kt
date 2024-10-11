@@ -47,6 +47,7 @@ class ProductService(private var productRepository: ProductRepository,var valida
         validationUtil.validate(updateProductRequest)
 
         val product = getIdOrThrowNotFound(id)
+        // test
 
         product.apply {
             name = updateProductRequest.name ?: this.name
