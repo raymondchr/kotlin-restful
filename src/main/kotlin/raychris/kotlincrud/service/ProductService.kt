@@ -47,7 +47,6 @@ class ProductService(private var productRepository: ProductRepository,var valida
         validationUtil.validate(updateProductRequest)
 
         val product = getIdOrThrowNotFound(id)
-        // test
 
         product.apply {
             name = updateProductRequest.name ?: this.name
@@ -60,6 +59,10 @@ class ProductService(private var productRepository: ProductRepository,var valida
         productRepository.save(product)
 
         return product.toResponse()
+    }
+
+    fun sell(): String {
+        return "SELAMAT KURSI KEJUAL"
     }
 
     fun delete(id: String):String{
