@@ -62,7 +62,7 @@ class ProductService(private var productRepository: ProductRepository,var valida
     }
 
     fun sell(): String {
-        return "SELAMAT KURSI KEJUAL"
+        return "SELAMAT MEJA KEJUAL"
     }
 
     fun delete(id: String):String{
