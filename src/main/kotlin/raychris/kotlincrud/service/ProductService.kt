@@ -43,24 +43,6 @@ class ProductService(private var productRepository: ProductRepository,var valida
         return productRepository.findByPage(pageable).map { it.toResponse() }
     }
 
-    fun update(id: String, updateProductRequest: UpdateProductRequest): ProductResponse{
-        validationUtil.validate(updateProductRequest)
-
-        val product = getIdOrThrowNotFound(id)
-
-        product.apply {
-            name = updateProductRequest.name ?: this.name
-            description = updateProductRequest.description ?: this.description
-            price = updateProductRequest.price
-            quantity = updateProductRequest.quantity ?: this.quantity
-            updatedAt = Date()
-        }
-
-        productRepository.save(product)
-
-        return product.toResponse()
-    }
-
     fun sell(): String {
         return "SELAMAT KURSI KEJUAL"
     }
